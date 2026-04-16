@@ -1,31 +1,19 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // 씬 전환을 위해 꼭 필요함
+using UnityEngine.SceneManagement; // 씬 관리를 위한 네임스페이스
 
 public class LevelObject : MonoBehaviour
 {
-    // 다음으로 이동할 씬의 이름을 인스펙터 창에서 입력받습니다.
+    // 48~49p: 인스펙터 창에서 다음 스테이지 이름을 적을 수 있게 노출
     public string nextLevel;
 
-    // 플레이어가 깃발(Goal)에 닿으면 실행됨
+    // 트리거 충돌 감지 (Is Trigger가 켜져 있어야 작동)
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 부딪힌 물체의 태그가 "Player"인지 확인
+        // 부딪힌 물체의 태그가 "Player"인지 확인 (49p 핵심 로직)
         if (collision.CompareTag("Player"))
         {
-            LoadNextLevel();
-        }
-    }
-
-    public void LoadNextLevel()
-    {
-        // 씬 이름이 비어있지 않은지 확인 후 로드
-        if (!string.IsNullOrEmpty(nextLevel))
-        {
+            Debug.Log("플레이어 도달! 다음 레벨로 이동: " + nextLevel);
             SceneManager.LoadScene(nextLevel);
-        }
-        else
-        {
-            Debug.LogWarning("인스펙터 창에서 Next Level 이름을 설정해주세요!");
         }
     }
 }
